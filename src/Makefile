@@ -57,7 +57,7 @@ SHELL=/bin/bash
 DEFS=-DHAVE_CONFIG_H
 CPPFLAGS=
 # to see the config.h
-CFLAGS=-g -O2 $(CPPFLAGS) -I../include $(DEFS)
+CFLAGS=-DCPU_FREQ=3600 -g -O2 $(CPPFLAGS) -I../include $(DEFS)
 LDFLAGS=-lm 
 LIBS=
 DESTDIR=/usr/local

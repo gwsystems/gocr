@@ -43,6 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "progress.h"
 #include "version.h"
 
+#include "get_time.h"
+
 static void out_version(int v) {
   fprintf(stderr, " Optical Character Recognition --- gocr "
           version_string " " release_string "\n"
@@ -342,6 +344,7 @@ job_t *OCR_JOB;
 // ------   MAIN - replace this by your own aplication! 
 // ------------------------------------------------------------- */
 int main(int argn, char *argv[]) {
+	unsigned long long st = get_time(), end= get_time();
   int multipnm=1;
   job_t job1, *job; /* fixme, dont want global variables for lib */
   job=OCR_JOB=&job1;
@@ -379,6 +382,9 @@ int main(int argn, char *argv[]) {
     job_free_image(job);
 
   }
-
+  end = get_time();
+ 
+  print_time(st, end);
+  
   return ((multipnm<0)?multipnm:0); /* -1=255 on error, 0 ok */
 }
