@@ -1,0 +1,47 @@
+BASE_DIR=../../
+include ../makefile.wasm.inc
+
+#EXTRA_FLAGS=-lm
+#WCC=/opt/wasi-sdk/bin/clang
+#WSYSROOT=/opt/wasi-sdk/share/wasi-sysroot/
+#WCFLAGS += --target=wasm32-wasi
+
+DEFS=-DHAVE_CONFIG_H
+LDFLAGS=-lm
+EXTRA_CFLAGS=-DWASM -DCPU_FREQ=3600 -g -O2 $(CPPFLAGS) -I. -I../include $(DEFS) $(LDFLAGS)
+
+SRC=pgm2asc.c \
+        box.c \
+        database.c \
+        detect.c \
+        barcode.c \
+        lines.c \
+        list.c \
+        ocr0.c \
+        ocr0n.c \
+        ocr1.c \
+        otsu.c \
+        output.c \
+        pixel.c \
+        unicode.c \
+        remove.c \
+	pnm.c \
+        pcx.c \
+        progress.c \
+        job.c
+
+all: clean gocr.awsm 
+#all: clean gocr.wasi
+
+gocr.awsm: $(SRC) gocr.c
+	${WASMCC} ${WASMCFLAGS} ${CFLAGS} ${EXTRA_CFLAGS} ${OPTFLAGS} gocr.c ${SRC} ${DUMMY} -o gocr.wasm 
+	${SFCC} gocr.wasm -o gocr.bc
+	${CC} ${CFLAGS} ${EXTRA_CFLAGS} ${OPTFLAGS} -D${USE_MEM} gocr.bc ${MEMC} ${RT_LIBC} ${RT_RT} -o gocr.out
+#	${CC} --shared -fPIC ${OPTFLAGS} -D${USE_MEM} -I${ART_INC} ${CFLAGS} ${EXTRA_CFLAGS} gocr.bc ${AMEMC} ${WASMISA} -o gocr.aso
+
+gocr.wasi: $(SRC) gocr.c
+	${WCC} -o gocr.wasi gocr.c ${SRC} ${CFLAGS} ${WCFLAGS} ${EXTRA_CFLAGS} -Wl,--allow-undefined,-z,stack-size=524288,--no-threads,--stack-first,--no-entry,--export-all,--export=main --sysroot=${WSYSROOT} -O3 -flto
+
+clean:
+	@ rm -f gocr.wasi gocr.wasm gocr.bc gocr.out gocr.aso
+

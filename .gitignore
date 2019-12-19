@@ -32,6 +32,8 @@ config.status
 
 # Executables
 src/gocr
+src/gocr.bc
+src/gocr.wasm
 *.exe
 *.out
 *.app
