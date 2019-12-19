@@ -14,20 +14,20 @@ prefix = /usr/local
 #bindir = $(prefix)/bin
 bindir = /usr/local${exec_prefix}/bin
 
-SHELL = /bin/sh
-# this does not work on SuSE 6.0, why? (autoconf 2.12 do not set /bin/sh ?)
+SHELL = /bin/bash
+# this does not work on SuSE 6.0, why? (autoconf 2.12 do not set /bin/bash ?)
 #SHELL = bash #
 INSTALL = /usr/bin/install -c
-CC = gcc
+CC = clang
 CFLAGS = -g -O2
 # following DEFs are not used, but I play with it for training
-CPPFLAGS = -Wall -g -fexceptions -DDO_DEBUG=1 
+CPPFLAGS = 
 DEFS = -DHAVE_CONFIG_H
 includedir = ${prefix}/include
 #
 # -pedantic -ansi -Wall
 LDFLAGS = -lm 
-LIBS = -lnetpbm 
+LIBS = 
 
 # RANLIB = @RANLIB@
 # AR = @AR@

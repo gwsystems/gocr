@@ -42,7 +42,7 @@ bindir = ${exec_prefix}/bin
 #libdir = ${exec_prefix}/lib
 #includedir = ${prefix}/include
 
-CC=gcc
+CC=clang
 # lib removed for simplification
 # ar,ranlib detection removed from configure (simplicity)
 #  but needed by some developpers (linux only) for for (make libs)
@@ -52,14 +52,14 @@ RANLIB = ranlib
 AR = ar
 INSTALL=/usr/bin/install -c
 # shell is needed for OS/2 to let if test -r $(PROGRAM) ... work
-SHELL=/bin/sh
+SHELL=/bin/bash
 
 DEFS=-DHAVE_CONFIG_H
-CPPFLAGS=-Wall -g -fexceptions -DDO_DEBUG=1 
+CPPFLAGS=
 # to see the config.h
 CFLAGS=-g -O2 $(CPPFLAGS) -I../include $(DEFS)
 LDFLAGS=-lm 
-LIBS=-lnetpbm 
+LIBS=
 DESTDIR=/usr/local
 
 .SUFFIXES: .s .o .c .h
