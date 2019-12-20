@@ -13,7 +13,7 @@
 static unsigned long long
 get_time()
 {
-#ifndef WASM
+#if 0
   unsigned long long int ret = 0;
   unsigned int cycles_lo;
   unsigned int cycles_hi;
@@ -34,7 +34,7 @@ get_time()
 static inline void
 print_time(unsigned long long s, unsigned long long e)
 {
-#ifndef WASM
+#if 0
 	printf("%llu cycs, %llu us\n", e - s, (e - s) / CPU_FREQ);
 #else
 	printf("%llu us\n", e - s);
