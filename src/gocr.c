@@ -128,13 +128,14 @@ static void process_arguments(job_t *job, int argn, char *argv[])
 
   assert(job);
 
-  if (argn <= 1) {
-    out_version(1);
-    exit(0);
-  }
+//  if (argn <= 1) {
+//    out_version(1);
+//    exit(0);
+//  }
 #ifdef HAVE_PGM_H
   pnm_init(&argn, &argv);
 #endif
+  job->cfg.out_format=ASCII;
   
   /* process arguments */
   for (i = 1; i < argn; i++) {
