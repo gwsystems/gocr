@@ -36,8 +36,8 @@ all: clean gocr.awsm
 gocr.awsm: $(SRC) gocr.c
 	${WASMCC} ${WASMCFLAGS} ${CFLAGS} ${EXTRA_CFLAGS} ${OPTFLAGS} gocr.c ${SRC} ${DUMMY} -o gocr.wasm 
 	${SFCC} gocr.wasm -o gocr.bc
-	${CC} ${CFLAGS} ${EXTRA_CFLAGS} ${OPTFLAGS} -D${USE_MEM} gocr.bc ${MEMC} ${RT_LIBC} ${RT_RT} -o gocr.out
-#	${CC} --shared -fPIC ${OPTFLAGS} -D${USE_MEM} -I${ART_INC} ${CFLAGS} ${EXTRA_CFLAGS} gocr.bc ${AMEMC} ${WASMISA} -o gocr.aso
+#	${CC} ${CFLAGS} ${EXTRA_CFLAGS} ${OPTFLAGS} -D${USE_MEM} gocr.bc ${MEMC} ${RT_LIBC} ${RT_RT} -o gocr.out
+	${CC} --shared -fPIC ${OPTFLAGS} -D${USE_MEM} -I${ART_INC} ${CFLAGS} ${EXTRA_CFLAGS} gocr.bc ${AMEMC} ${WASMISA} -o gocr.aso
 
 gocr.wasi: $(SRC) gocr.c
 	${WCC} -o gocr.wasi gocr.c ${SRC} ${CFLAGS} ${WCFLAGS} ${EXTRA_CFLAGS} -Wl,--allow-undefined,-z,stack-size=524288,--no-threads,--stack-first,--no-entry,--export-all,--export=main --sysroot=${WSYSROOT} -O3 -flto
