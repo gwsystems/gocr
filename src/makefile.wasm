@@ -35,8 +35,9 @@ all: clean gocr.awsm
 
 gocr.awsm: $(SRC) gocr.c
 	${WASMCC} ${WASMCFLAGS} ${CFLAGS} ${EXTRA_CFLAGS} ${OPTFLAGS} gocr.c ${SRC} ${DUMMY} -o gocr.wasm 
-	${SFCC} gocr.wasm -o gocr.bc
+#	${SFCC} gocr.wasm -o gocr.bc
 #	${CC} ${CFLAGS} ${EXTRA_CFLAGS} ${OPTFLAGS} -D${USE_MEM} gocr.bc ${MEMC} ${RT_LIBC} ${RT_RT} -o gocr.out
+	${SFCC} --inline-constant-globals --runtime-globals gocr.wasm -o gocr.bc
 	${CC} --shared -fPIC ${OPTFLAGS} -D${USE_MEM} -I${ART_INC} ${CFLAGS} ${EXTRA_CFLAGS} gocr.bc ${AMEMC} ${WASMISA} -o gocr.aso
 
 gocr.wasi: $(SRC) gocr.c
